@@ -5764,6 +5764,7 @@ WORD_LENGTH = 5;
 let targetWord = "";
 let currentAttempt = 0;
 let guessHistory = [];
+let guess = '';
 let win;
 let currCellIdx = 0;
 /*----- cached elements  -----*/
@@ -5788,31 +5789,43 @@ function render() {}
 function handleClick(key) {
   if (currCellIdx < gridCells.length) {
     gridCells[currCellIdx].textContent = key;
+
+    guess += key;
+
     currCellIdx++;
+
+    console.log('Current Guess: ', guess)
   }
 }
 
 function handleBackspace() {
   if (currCellIdx > 0) {
     currCellIdx--;
-    gridCells[currCellIdx].textContent = "";
+
+    guess = guess.slice(0, -1);
+
+    gridCells[currCellIdx].textContent = '';
+
+    console.log('Current guess: ', guess)
   }
 }
 
+function handleEnter() {
+
+}
+
 keyboardKeys.forEach((keyEl) => {
-  keyEl.addEventListener("click", () => {
+  keyEl.addEventListener('click', (event) => {
     const key = keyEl.textContent.trim().toUpperCase();
 
-    if (key === "←") {
+    if (key === '←') {
       handleBackspace();
-    } else if (key === "enter") {
+    } else if (key === 'enter') {
       //code here for enter
     } else {
       handleClick(key);
     }
-  });
-});
 
-ke.forEach((gridCell) => {
-  gridCell.addEventListener("click", handleClick);
+    event.preventDefault();
+  });
 });
