@@ -5762,20 +5762,23 @@ MAX_ATTEMPTS = 6;
 WORD_LENGTH = 5;
 /*----- state variables -----*/
 let targetWord = "";
-let currentAttempt = 0;
+let currentAttempt = 1;
 let guessHistory = [];
-let guess = '';
+let guess = "";
 let win;
 let currCellIdx = 0;
+let currRowIdx = 1;
+let wrongLetters;
 /*----- cached elements  -----*/
 let gridCells = document.querySelectorAll(".grid-cell");
 let keyboardKeys = document.querySelectorAll(".keyboard-key");
-
+let gridRow1 = document.querySelectorAll(".row1");
+let gridRow2 = document.querySelectorAll(".row2");
 /*----- event listeners -----*/
 document.getElementById("");
 
 /*----- functions -----*/
-let input = init();
+init();
 function getRandomWord() {
   return WORDS[Math.floor(Math.random() * WORDS.length)];
 }
@@ -5784,7 +5787,10 @@ function init() {
   render();
 }
 
-function render() {}
+function render() {
+  targetWord = getRandomWord().toUpperCase();
+  console.log(targetWord);
+}
 
 function handleClick(key) {
   if (currCellIdx < gridCells.length) {
@@ -5794,8 +5800,9 @@ function handleClick(key) {
 
     currCellIdx++;
 
-    console.log('Current Guess: ', guess)
+    console.log("Current Guess: ", guess);
   }
+  console.log(currCellIdx);
 }
 
 function handleBackspace() {
@@ -5804,27 +5811,65 @@ function handleBackspace() {
 
     guess = guess.slice(0, -1);
 
-    gridCells[currCellIdx].textContent = '';
+    gridCells[currCellIdx].textContent = "";
 
-    console.log('Current guess: ', guess)
+    console.log("Current guess: ", guess);
+  }
+}
+
+function checkWord() {
+  for(let i =0; i<guess.length; i++)
+  
+  if(targetWord.charAt(i) === guess.charAt(i)){
+    document.getElementById(`${guess.charAt(i)}`).style.backgroundColor = 'green';
+  }else if(targetWord.includes(guess.charAt(i))){
+    document.getElementById(`${guess.charAt(i)}`).style.backgroundColor = 'yellow';
+  } else {
+    
+    document.getElementById(`${guess.charAt(i)}`).style.backgroundColor = 'gray';
   }
 }
 
 function handleEnter() {
-
+  if (guess.length < 5) {
+    alert("Word must be 5 letters");
+  } else {
+    if (guess == targetWord) {
+      alert("You win!");
+    } else if ((guess.length = 5)) {
+      guessHistory.push(guess);
+      alert('Incorrect. Please try again.')
+    }
+  }
 }
 
+function findKey(letterKey) {
+  let targetKey = letterKey.toUpperCase();
+
+  for (let i = 0; i < keyboardKeys.length; i++) {
+    if (keyboardKeys[i].textContent.trim().toUpperCase() === targetKey) {
+      return keyboardKeys[i];
+    }
+  }
+
+  return null;
+}
+
+function updateBoard() {}
+
 keyboardKeys.forEach((keyEl) => {
-  keyEl.addEventListener('click', (event) => {
+  keyEl.addEventListener("click", (event) => {
     const key = keyEl.textContent.trim().toUpperCase();
 
-    if (key === '←') {
+    if (key === "←") {
       handleBackspace();
-    } else if (key === 'enter') {
-      //code here for enter
+    } else if (key === "ENTER") {
+      handleEnter();
+      checkWord();
     } else {
       handleClick(key);
     }
+    // handleHint();
 
     event.preventDefault();
   });
