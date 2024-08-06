@@ -46,6 +46,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: white;
+    cursor: pointer;
 }
 
 .keyboard-key.special-key {
