@@ -1,7 +1,20 @@
 /*----- constants -----*/
+
 // const WORDS = require('./words.js');
 MAX_ATTEMPTS = 6;
 WORD_LENGTH = 5;
+
+const bruh = new Audio('./bruh.mp3');
+bruh.volume = .5;
+
+const huh = new Audio('./huh.mp3');
+huh.volume = .5;
+
+const wrong = new Audio('./wrong.mp3');
+wrong.volume = .5;
+
+const sadSponge = new Audio('./sadSponge.mp3');
+sadSponge.volume = .5;
 /*----- state variables -----*/
 let targetWord = "";
 let currentAttempt = 1;
@@ -11,11 +24,13 @@ let win = false;
 let currCellIdx = 0;
 let currRowIdx = 1;
 let wrongLetters = "";
+let darkMode = false;
 /*----- cached elements  -----*/
 let gridCells = document.querySelectorAll(".grid-cell");
 let keyboardKeys = document.querySelectorAll(".keyboard-key");
 let message = document.getElementById("message");
 let restartBtn = document.getElementById("restart");
+let modeBtn = document.getElementById("input");
 /*----- event listeners -----*/
 keyboardKeys.forEach((keyEl) => {
   keyEl.addEventListener("click", (event) => {
@@ -29,7 +44,6 @@ keyboardKeys.forEach((keyEl) => {
       handleBackspace();
     } else if (key === "ENTER") {
       handleEnter();
-      checkWord();
     } else {
       handleClick(key);
     }
@@ -41,6 +55,9 @@ restartBtn.addEventListener("click", () => {
   restartGame();
 });
 
+modeBtn.addEventListener("click", () => {
+  changeMode();
+});
 /*----- functions -----*/
 init();
 
@@ -52,12 +69,12 @@ function init() {
   render();
   restartBtn.style.display = "none";
   keyboardKeys.forEach((key) => {
-    key.style.backgroundColor = ""; 
+    key.style.backgroundColor = "";
   });
   gridCells.forEach((cell) => {
     cell.textContent = "";
     cell.style.backgroundColor = "";
-  })
+  });
   message.innerText = "Welcome!";
 }
 
@@ -92,7 +109,7 @@ function handleBackspace() {
   }
 }
 
-function checkWord () {
+function checkWord() {
   let letterCount = {};
 
   for (let letter of targetWord) {
@@ -102,7 +119,7 @@ function checkWord () {
     letterCount[letter]++;
   }
 
-  for (let i=0; i < WORD_LENGTH; i++) {
+  for (let i = 0; i < WORD_LENGTH; i++) {
     const guessedLetter = guess.charAt(i);
     const targetLetter = targetWord.charAt(i);
 
@@ -112,32 +129,21 @@ function checkWord () {
     }
   }
 
-  for (let i=0; i < WORD_LENGTH; i++) {
+  for (let i = 0; i < WORD_LENGTH; i++) {
     const guessedLetter = guess.charAt(i);
     const targetLetter = targetWord.charAt(i);
 
-    if (guessedLetter !== targetLetter && targetWord.includes(guessedLetter) && letterCount[guessedLetter] > 0) {
+    if (
+      guessedLetter !== targetLetter &&
+      targetWord.includes(guessedLetter) &&
+      letterCount[guessedLetter] > 0
+    ) {
       updateColor(i, guessedLetter, "yellow");
       letterCount[guessedLetter]--;
-    } else if(!targetWord.includes(guessedLetter)) {
+    } else if (!targetWord.includes(guessedLetter)) {
       updateColor(i, guessedLetter, "gray");
     }
   }
-}
-
-function checkWord() {
-  for (let i = 0; i < guess.length; i++)
-    if (targetWord.charAt(i) === guess.charAt(i)) {
-      document.getElementById(`${guess.charAt(i)}`).style.backgroundColor =
-        "green";
-      
-    } else if (targetWord.includes(guess.charAt(i))) {
-      document.getElementById(`${guess.charAt(i)}`).style.backgroundColor =
-        "yellow";
-    } else if (!targetWord.includes((guess.charAt(i)))){
-      document.getElementById(`${guess.charAt(i)}`).style.backgroundColor =
-        "gray";
-    }
 }
 
 function updateColor(index, letter, color) {
@@ -147,7 +153,7 @@ function updateColor(index, letter, color) {
     if (key.textContent.trim().toUpperCase() === letter) {
       key.style.backgroundColor = color;
     }
-  })
+  });
 }
 
 function handleEnter() {
@@ -158,10 +164,18 @@ function handleEnter() {
       message.innerText = "You win!";
       restartBtn.style.display = "block";
     } else if (guess.length === WORD_LENGTH) {
+      console.log(guess)
       guessHistory.push(guess);
       message.innerText = "Incorrect. Please try again.";
-      checkWord();
-      nextGuess();
+      if(WORDS.includes(guess.trim().toLowerCase())){
+        wrong.play();
+        checkWord();
+        nextGuess();
+      }else {
+        message.innerText = "This is not a word";
+        bruh.play();
+      }
+
     }
   }
 }
@@ -173,6 +187,7 @@ function nextGuess() {
     currCellIdx = (currentAttempt - 1) * WORD_LENGTH;
     console.log(`Attempt ${currentAttempt} started.`);
   } else {
+    sadSponge.play();
     message.innerText = `Game Over! The word was ${targetWord}`;
     restartBtn.style.display = "block";
   }
@@ -187,4 +202,30 @@ function restartGame() {
   currRowIdx = 1;
   wrongLetters = "";
   init();
+}
+
+function goDark() {
+  let background = document.getElementById("body");
+  
+  background.style.backgroundColor = "black";
+  document.getElementById("h1").style.color = "lightgray";
+  message.style.color = "lightgray";
+  darkMode = true;
+}
+
+function goLight() {
+  let background = document.getElementById("body");
+
+  background.style.backgroundColor = "white";
+  document.getElementById("h1").style.color = "black";
+  message.style.color = "black";
+  darkMode = false;
+}
+
+function changeMode() {
+  if(!darkMode){
+    goDark();
+  }else {
+    goLight();
+  }
 }

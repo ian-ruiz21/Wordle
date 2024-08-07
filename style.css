@@ -1,8 +1,26 @@
 body {
+    font-family: "Rubik Mono One", monospace;
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    padding-top: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
 }
 
 .grid-container {
@@ -50,16 +68,20 @@ body {
 }
 
 .keyboard-key.special-key {
-    width: 60px;
+    width: 70px;
 }
 
 /* From Uiverse.io by andrew-demchenk0 */ 
 .switch {
-    font-size: 17px;
-    position: relative;
-    width: 64px;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 17px; 
+    width: 64px; 
     height: 34px;
-    justify-content: flex-end;
+    display: flex;
+    align-items: center;
 }
   
   .switch input {
