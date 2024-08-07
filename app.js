@@ -75,7 +75,7 @@ function init() {
     cell.textContent = "";
     cell.style.backgroundColor = "";
   });
-  message.innerText = "Welcome!";
+  message.innerText = "Welcome! Make your first Guess";
 }
 
 function render() {
@@ -160,13 +160,14 @@ function handleEnter() {
   if (guess.length < WORD_LENGTH) {
     message.innerText = "Word must be 5 letters";
   } else {
+
     if (guess === targetWord) {
       message.innerText = "You win!";
       restartBtn.style.display = "block";
     } else if (guess.length === WORD_LENGTH) {
       console.log(guess)
       guessHistory.push(guess);
-      message.innerText = "Incorrect. Please try again.";
+      message.innerText = `Incorrect. Enter guess ${currentAttempt}.`;
       if(WORDS.includes(guess.trim().toLowerCase())){
         wrong.play();
         checkWord();
