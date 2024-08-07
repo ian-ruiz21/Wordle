@@ -5765,26 +5765,50 @@ let targetWord = "";
 let currentAttempt = 1;
 let guessHistory = [];
 let guess = "";
-let win;
+let win = false;
 let currCellIdx = 0;
 let currRowIdx = 1;
-let wrongLetters;
+let wrongLetters = "";
 /*----- cached elements  -----*/
 let gridCells = document.querySelectorAll(".grid-cell");
 let keyboardKeys = document.querySelectorAll(".keyboard-key");
-let gridRow1 = document.querySelectorAll(".row1");
-let gridRow2 = document.querySelectorAll(".row2");
+let message = document.getElementById("message");
+let restartBtn = document.getElementById("restart");
 /*----- event listeners -----*/
-document.getElementById("");
+keyboardKeys.forEach((keyEl) => {
+  keyEl.addEventListener("click", (event) => {
+    if (currentAttempt === 1 && guess.length === 0) {
+      message.innerText = "1st Attempt Started";
+    }
+
+    const key = keyEl.textContent.trim().toUpperCase();
+
+    if (key === "←") {
+      handleBackspace();
+    } else if (key === "ENTER") {
+      handleEnter();
+      checkWord();
+    } else {
+      handleClick(key);
+    }
+    event.preventDefault();
+  });
+});
+
+restartBtn.addEventListener("click", () => {
+  restartGame();
+});
 
 /*----- functions -----*/
 init();
+
 function getRandomWord() {
   return WORDS[Math.floor(Math.random() * WORDS.length)];
 }
 
 function init() {
   render();
+  restartBtn.style.display = "none";
 }
 
 function render() {
@@ -5793,7 +5817,7 @@ function render() {
 }
 
 function handleClick(key) {
-  if (currCellIdx < gridCells.length) {
+  if (guess.length < WORD_LENGTH) {
     gridCells[currCellIdx].textContent = key;
 
     guess += key;
@@ -5801,8 +5825,9 @@ function handleClick(key) {
     currCellIdx++;
 
     console.log("Current Guess: ", guess);
+  } else {
+    message.innerText = "Guess is complete. Click enter to submit";
   }
-  console.log(currCellIdx);
 }
 
 function handleBackspace() {
@@ -5818,59 +5843,63 @@ function handleBackspace() {
 }
 
 function checkWord() {
-  for(let i =0; i<guess.length; i++)
-  
-  if(targetWord.charAt(i) === guess.charAt(i)){
-    document.getElementById(`${guess.charAt(i)}`).style.backgroundColor = 'green';
-  }else if(targetWord.includes(guess.charAt(i))){
-    document.getElementById(`${guess.charAt(i)}`).style.backgroundColor = 'yellow';
-  } else {
-    
-    document.getElementById(`${guess.charAt(i)}`).style.backgroundColor = 'gray';
-  }
+  for (let i = 0; i < guess.length; i++)
+    if (targetWord.charAt(i) === guess.charAt(i)) {
+      document.getElementById(`${guess.charAt(i)}`).style.backgroundColor =
+        "green";
+      
+    } else if (targetWord.includes(guess.charAt(i))) {
+      document.getElementById(`${guess.charAt(i)}`).style.backgroundColor =
+        "yellow";
+    } else {
+      document.getElementById(`${guess.charAt(i)}`).style.backgroundColor =
+        "gray";
+    }
 }
 
 function handleEnter() {
-  if (guess.length < 5) {
-    alert("Word must be 5 letters");
+  if (guess.length < WORD_LENGTH) {
+    message.innerText = "Word must be 5 letters";
   } else {
-    if (guess == targetWord) {
-      alert("You win!");
-    } else if ((guess.length = 5)) {
+    if (guess === targetWord) {
+      message.innerText = "You win!";
+      restartBtn.style.display = "block";
+      init();
+    } else if (guess.length === WORD_LENGTH) {
       guessHistory.push(guess);
-      alert('Incorrect. Please try again.')
-    }
-  }
-}
-
-function findKey(letterKey) {
-  let targetKey = letterKey.toUpperCase();
-
-  for (let i = 0; i < keyboardKeys.length; i++) {
-    if (keyboardKeys[i].textContent.trim().toUpperCase() === targetKey) {
-      return keyboardKeys[i];
-    }
-  }
-
-  return null;
-}
-
-function updateBoard() {}
-
-keyboardKeys.forEach((keyEl) => {
-  keyEl.addEventListener("click", (event) => {
-    const key = keyEl.textContent.trim().toUpperCase();
-
-    if (key === "←") {
-      handleBackspace();
-    } else if (key === "ENTER") {
-      handleEnter();
+      message.innerText = "Incorrect. Please try again.";
       checkWord();
-    } else {
-      handleClick(key);
+      nextGuess();
     }
-    // handleHint();
+  }
+}
 
-    event.preventDefault();
+function nextGuess() {
+  if (currentAttempt < MAX_ATTEMPTS) {
+    currentAttempt++;
+    guess = "";
+    currCellIdx = (currentAttempt - 1) * WORD_LENGTH;
+    console.log(`Attempt ${currentAttempt} started.`);
+  } else {
+    message.innerText = "Game Over! No more attempts left.";
+    restartBtn.style.display = "block";
+  }
+}
+
+function restartGame() {
+  currentAttempt = 1;
+  guess = "";
+  guessHistory = [];
+  win = false;
+  currCellIdx = 0;
+  currRowIdx = 1;
+  wrongLetters = "";
+  keyboardKeys.forEach((key) => {
+    key.style.backgroundColor = ""; // Reset the background color
   });
-});
+  gridCells.forEach((cell) => {
+    cell.textContent = "";
+  })
+  message.innerText = "Welcome!"
+  init();
+}
