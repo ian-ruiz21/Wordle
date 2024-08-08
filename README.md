@@ -37,6 +37,7 @@ Here's how you can play and explore the game:
 - Sound Effects - https://www.voicemod.net/
 - Buttons - https://uiverse.io/
 - WireFrame - https://www.canva.com/
+- Favicon - https://www.favicon-generator.org/
 
 ---
 
