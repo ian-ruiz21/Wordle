@@ -4,16 +4,16 @@
 MAX_ATTEMPTS = 6;
 WORD_LENGTH = 5;
 
-const bruh = new Audio('./bruh.mp3');
+const bruh = new Audio('./audio/bruh.mp3');
 bruh.volume = .5;
 
-const huh = new Audio('./huh.mp3');
+const huh = new Audio('./audio/huh.mp3');
 huh.volume = .5;
 
-const wrong = new Audio('./wrong.mp3');
+const wrong = new Audio('./audio/wrong.mp3');
 wrong.volume = .5;
 
-const sadSponge = new Audio('./sadSponge.mp3');
+const sadSponge = new Audio('./audio/sadSponge.mp3');
 sadSponge.volume = .5;
 /*----- state variables -----*/
 let targetWord = "";
