@@ -1,11 +1,7 @@
 /*----- constants -----*/
-
-// const WORDS = require('./words.js');
-MAX_ATTEMPTS = 6;
-WORD_LENGTH = 5;
-
-const bruh = new Audio('./audio/bruh.mp3');
-bruh.volume = .5;
+import WORDS from './words.js'
+const MAX_ATTEMPTS = 6;
+const WORD_LENGTH = 5;
 
 const huh = new Audio('./audio/huh.mp3');
 huh.volume = .5;
@@ -23,10 +19,7 @@ let targetWord = "";
 let currentAttempt = 1;
 let guessHistory = [];
 let guess = "";
-let win = false;
 let currCellIdx = 0;
-let currRowIdx = 1;
-let wrongLetters = "";
 let darkMode = false;
 /*----- cached elements  -----*/
 let gridCells = document.querySelectorAll(".grid-cell");
@@ -94,7 +87,6 @@ function handleClick(key) {
 
     currCellIdx++;
 
-    console.log("Current Guess: ", guess);
   } else {
     message.innerText = "Guess is complete. Click enter to submit";
   }
@@ -108,7 +100,6 @@ function handleBackspace() {
 
     gridCells[currCellIdx].textContent = "";
 
-    console.log("Current guess: ", guess);
   }
 }
 
@@ -170,16 +161,15 @@ function handleEnter() {
       restartBtn.style.display = "block";
       checkWord();
     } else if (guess.length === WORD_LENGTH) {
-      console.log(guess)
       guessHistory.push(guess);
-      message.innerText = `Incorrect. Enter guess ${currentAttempt}.`;
+      message.innerText = `Incorrect. Enter guess ${currentAttempt+1}.`;
       if(WORDS.includes(guess.trim().toLowerCase())){
         wrong.play();
         checkWord();
         nextGuess();
       }else {
         message.innerText = "This is not a word";
-        bruh.play();
+        huh.play();
       }
 
     }
@@ -191,7 +181,6 @@ function nextGuess() {
     currentAttempt++;
     guess = "";
     currCellIdx = (currentAttempt - 1) * WORD_LENGTH;
-    console.log(`Attempt ${currentAttempt} started.`);
   } else {
     sadSponge.play();
     message.innerText = `Game Over! The word was ${targetWord}`;
@@ -203,10 +192,7 @@ function restartGame() {
   currentAttempt = 1;
   guess = "";
   guessHistory = [];
-  win = false;
   currCellIdx = 0;
-  currRowIdx = 1;
-  wrongLetters = "";
   init();
 }
 
