@@ -14,6 +14,10 @@ sadSponge.volume = .5;
 
 const yipee = new Audio('./assets/audio/yipee.mp3');
 yipee.volume = .5;
+
+const modal = document.getElementById("instructionsModal");
+const openModal = document.getElementById("openModal");
+const closeButton = document.getElementsByClassName("close-button")[0];
 /*----- state variables -----*/
 let targetWord = "";
 let currentAttempt = 1;
@@ -219,5 +223,19 @@ function changeMode() {
     goDark();
   }else {
     goLight();
+  }
+}
+
+openModal.onclick = function() {
+  modal.style.display = "block";
+}
+
+closeButton.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+      modal.style.display = "none";
   }
 }

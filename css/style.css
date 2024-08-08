@@ -82,6 +82,7 @@ h1 {
     height: 34px;
     display: flex;
     align-items: center;
+    margin-left: 10px;
 }
   
   .switch input {
@@ -245,4 +246,70 @@ h1 {
   100% {
     background-position: right bottom;
   }
+}
+
+
+#openModal {
+  background-color: skyblue;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Arial", sans-serif;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-right: 10px;
+}
+
+#openModal:hover {
+  background-color: #68c1f3;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#openModal:active {
+  background-color:  #53a9db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: black;
+  color: white;
+  text-align: left;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 600px;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
 }

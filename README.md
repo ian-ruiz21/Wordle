@@ -14,7 +14,7 @@ Why did I choose this game? I chose this game due to my love for the NYT Games W
 
 ## Screenshot
 
-![Starting Screen](./wordleStartScreen.png)  
+![Starting Screen](./assets/wordleStartScreen.png)  
 
 *Here I have included a screenshot of the starting screen of the game*
 

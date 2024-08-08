@@ -22,6 +22,47 @@
         <span class="slider" id="slider"></span>
       </label>
     </div>
+
+    <button id="openModal"><strong><img src="./assets/click.png" alt="click">Instructions</strong></button>
+
+    <div id="instructionsModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Instructions</h2>
+        <p>
+          <strong>Objective:</strong> Guess the secret five-letter word within six attempts. Each guess provides feedback to help you find the correct word.
+        </p>
+        <p>
+          <strong>How to Play:</strong>
+          <ul>
+            <li>Begin by typing a valid five-letter word on the keyboard.</li>
+            <li>Click 'enter' to complete your guess.</li>
+          </ul>
+        </p>
+        <p>
+          <strong>Receive Feedback: </strong>
+          <ul>
+            <li>After submitting a word, the tiles will change colors to give you hints about the correctness of your guess.</li>
+          </ul>
+        </p>
+        <p>
+          <strong>Hints: </strong> 
+          <ul>
+            <li>Green: The letter is in word and in the correct position</li>
+            <li>Yellow: The letter is in the word, but is not in the correct spot</li>
+            <li>Green: The letter does not exist in the word</li>
+          </ul>
+        </p>
+        <p>
+          <strong>Continue Guessing: </strong>
+          <ul>
+            <li>Use the feedback to make informed guesses</li>
+            <li>You have a total of six attempts to guess the correct word.</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+
     <h2 id="message">Welcome!</h2>
 
     <div class="grid-container">
@@ -63,7 +104,6 @@
 
     </div>
 
-    <!-- <button id="restart">Restart</button> -->
     <!-- /* From Uiverse.io by KlaujonRuamni */  -->
     <button class="beautiful-button" id="restart">
       Restart 
