@@ -15,6 +15,9 @@ wrong.volume = .5;
 
 const sadSponge = new Audio('./audio/sadSponge.mp3');
 sadSponge.volume = .5;
+
+const yipee = new Audio('./audio/yipee.mp3');
+yipee.volume = .5;
 /*----- state variables -----*/
 let targetWord = "";
 let currentAttempt = 1;
@@ -162,8 +165,10 @@ function handleEnter() {
   } else {
 
     if (guess === targetWord) {
+      yipee.play();
       message.innerText = "You win!";
       restartBtn.style.display = "block";
+      checkWord();
     } else if (guess.length === WORD_LENGTH) {
       console.log(guess)
       guessHistory.push(guess);
