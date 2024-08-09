@@ -38,6 +38,7 @@ Here's how you can play and explore the game:
 - Buttons - https://uiverse.io/
 - WireFrame - https://www.canva.com/
 - Favicon - https://www.favicon-generator.org/
+- Click image - https://www.iconpacks.net/
 
 ---
 

@@ -62,8 +62,11 @@ modeBtn.addEventListener("click", () => {
 init();
 
 function getRandomWord() {
-  return WORDS[Math.floor(Math.random() * WORDS.length)];
+  // return WORDS[Math.floor(Math.random() * WORDS.length)];
+  return WORDS[0];
 }
+
+
 
 function init() {
   render();
@@ -80,7 +83,7 @@ function init() {
 
 function render() {
   targetWord = getRandomWord().toUpperCase();
-  console.log(targetWord);
+  // console.log(targetWord);
 }
 
 function handleClick(key) {

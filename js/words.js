@@ -5758,4 +5758,8 @@ const WORDS = [
     "pupal",
   ];
 
+const WORD = [
+  "witch"
+]
+
   export default WORDS;
