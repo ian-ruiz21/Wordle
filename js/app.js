@@ -6,8 +6,8 @@ const WORD_LENGTH = 5;
 const huh = new Audio('./assets/audio/huh.mp3');
 huh.volume = .5;
 
-const wrong = new Audio('./assets/audio/wrong.mp3');
-wrong.volume = .5;
+const bruh = new Audio('./assets/audio/bruh.mp3');
+bruh.volume = .25;
 
 const sadSponge = new Audio('./assets/audio/sadSponge.mp3');
 sadSponge.volume = .5;
@@ -62,8 +62,8 @@ modeBtn.addEventListener("click", () => {
 init();
 
 function getRandomWord() {
-  // return WORDS[Math.floor(Math.random() * WORDS.length)];
-  return WORDS[0];
+  return WORDS[Math.floor(Math.random() * WORDS.length)];
+  // return WORDS[0];
 }
 
 
@@ -83,7 +83,6 @@ function init() {
 
 function render() {
   targetWord = getRandomWord().toUpperCase();
-  // console.log(targetWord);
 }
 
 function handleClick(key) {
@@ -171,7 +170,7 @@ function handleEnter() {
       guessHistory.push(guess);
       message.innerText = `Incorrect. Enter guess ${currentAttempt+1}.`;
       if(WORDS.includes(guess.trim().toLowerCase())){
-        wrong.play();
+        bruh.play();
         checkWord();
         nextGuess();
       }else {
